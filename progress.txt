@@ -5,3 +5,10 @@
 - Created `style.css` - Styling modern untuk Todo List
 - Created `script.js` - Logic CRUD + localStorage untuk Todo List
 - Modified `script.js` - Tambah konfirmasi hapus dengan confirm()
+- Push initial commit to GitHub repo ShofaKhafiiy/vibeCode-OpenCode
+- Refactored `script.js` — Split into modular architecture (`storage.js`, `ui.js`, `events.js`, `app.js`)
+  - `storage.js` — Encapsulated localStorage load/save
+  - `ui.js` — DOM rendering with DocumentFragment + private helpers
+  - `events.js` — Event delegation via handler setup
+  - `app.js` — Entry point orchestrating state and actions
+- Modified `index.html` — Updated paths to CSS and JS module entry

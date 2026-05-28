@@ -36,3 +36,21 @@ metadata:
 
 
 **PENTING:**Selalu append, jangan overwrite file yang sudah ada
+
+# Todo App Progress
+
+## Completed
+- [x] Setup project
+- [x] Add todo
+- [x] localStorage
+- [x] Modular architecture
+
+## In Progress
+- [ ] Edit todo
+- [ ] Delete animation
+- [ ] Dark mode
+
+## Future Features
+- [ ] Drag and drop
+- [ ] Categories
+- [ ] Due dates
