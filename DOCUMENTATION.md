@@ -1,0 +1,212 @@
+# Documentation
+
+## Tech Stack
+
+- **Runtime:** Node.js
+- **Framework:** Express.js
+- **Database:** MySQL 9.x (Docker lokal / Railway MySQL plugin)
+- **Auth:** JWT (jsonwebtoken) + bcryptjs
+- **Frontend:** Vanilla JS + CSS (no framework)
+
+## Project Structure
+
+```
+.
+├── src/
+│   ├── app.js                  # Entry point Express
+│   ├── config/
+│   │   ├── db.js               # MySQL connection pool
+│   │   └── init-db.js          # Auto-create tables on startup
+│   ├── models/
+│   │   ├── user.model.js       # User queries
+│   │   └── todo.model.js       # Todo queries
+│   ├── controllers/
+│   │   ├── auth.controller.js  # Register & login logic
+│   │   ├── todo.controller.js  # Todo CRUD handlers
+│   │   └── user.controller.js  # User handlers
+│   ├── routes/
+│   │   ├── auth.routes.js      # POST /register, /login
+│   │   ├── todo.routes.js      # CRUD /todos (auth required)
+│   │   └── user.routes.js      # GET /users, DELETE /users
+│   ├── middleware/
+│   │   ├── auth.js             # JWT verification
+│   │   └── errorHandler.js     # Global error handler
+│   ├── js/
+│   │   ├── app.js              # Frontend entry (auth flow + API calls)
+│   │   ├── api.js              # HTTP client for backend
+│   │   ├── auth.js             # Token/user localStorage management
+│   │   ├── storage.js          # (legacy) localStorage
+│   │   ├── ui.js               # DOM rendering
+│   │   ├── events.js           # Event delegation
+│   │   ├── gestures.js         # Swipe-to-delete
+│   │   └── theme.js            # Dark mode
+│   ├── css/
+│   │   └── style.css           # All styles
+│   └── index.html              # Frontend HTML
+├── docker-compose.yml          # MySQL container
+├── init.sql                    # Database schema
+├── .env.example                # Environment template
+└── package.json
+```
+
+## API Reference
+
+### Health
+
+```
+GET /api/health
+Response: { "status": "ok" }
+```
+
+### Auth
+
+```
+POST /api/auth/register
+Body: { "name": string, "email": string, "password": string (min 6) }
+Response: { "data": { "user": {...}, "token": string } }
+
+POST /api/auth/login
+Body: { "email": string, "password": string }
+Response: { "data": { "user": {...}, "token": string } }
+```
+
+### Todos (all require Authorization: Bearer <token>)
+
+```
+GET    /api/todos           # List all todos for logged-in user
+POST   /api/todos           # Create todo: { "text": string }
+PUT    /api/todos/:id       # Update: { "text"?, "completed"? }
+DELETE /api/todos/:id       # Delete
+```
+
+### Users
+
+```
+GET    /api/users           # List all users (no auth)
+GET    /api/users/:id       # Get user by ID (no auth)
+DELETE /api/users/:id       # Delete own account (auth required)
+DELETE /api/users/email     # Delete by email: { "email": string } (auth required)
+```
+
+## Auth Flow
+
+1. User registers via `/api/auth/register`
+2. Server hashes password with bcrypt (10 salt rounds)
+3. Server returns JWT token (default expiry: 7 days)
+4. Frontend stores token + user info in localStorage
+5. All /api/todos requests include `Authorization: Bearer <token>`
+6. Auth middleware verifies token on every protected route
+7. Logout clears localStorage
+
+## Frontend Architecture (src/js/)
+
+```
+app.js (entry)
+  ├── api.js       — fetch wrapper with JWT
+  ├── auth.js      — localStorage token/user
+  ├── ui.js        — renderTodos, removeTodoItem
+  ├── events.js    — click/keyboard handlers
+  ├── gestures.js  — swipe-to-delete touch handler
+  └── theme.js     — dark mode toggle + localStorage
+```
+
+Flow:
+1. App loads → check if token exists in localStorage
+2. If token exists → fetch todos from API → render
+3. If no token → show login/register forms
+4. Register/Login → save token → fetch todos → render
+
+## Database Schema
+
+```sql
+CREATE TABLE users (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(100) NOT NULL,
+  email VARCHAR(255) NOT NULL UNIQUE,
+  password VARCHAR(255) NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE todos (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  user_id INT NOT NULL,
+  text VARCHAR(500) NOT NULL,
+  completed BOOLEAN DEFAULT FALSE,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);
+```
+
+## Running Locally
+
+### Prerequisites
+- Node.js 18+
+- Docker (for MySQL) or local MySQL
+
+### Setup
+```bash
+git clone https://github.com/ShofaKhafiiy/vibeCode-OpenCode.git
+cd vibeCode-OpenCode
+npm install
+cp .env.example .env
+docker compose up -d    # Start MySQL
+npm start               # Start server on :3000
+```
+
+## Environment Variables
+
+| Variable | Default | Description |
+|---|---|---|
+| PORT | 3000 | Server port |
+| DB_HOST | localhost | MySQL host |
+| DB_PORT | 3306 | MySQL port |
+| DB_NAME | todo_db | Database name |
+| DB_USER | todo_user | Database user |
+| DB_PASSWORD | - | Database password |
+| DB_ROOT_PASSWORD | - | MySQL root password |
+| JWT_SECRET | - | Secret key for JWT signing |
+| JWT_EXPIRES_IN | 7d | Token expiry duration |
+| CORS_ORIGIN | * | Allowed CORS origin |
+| NODE_ENV | development | Environment mode |
+
+Railway MySQL plugin auto-injects `MYSQL_URL`, `MYSQL_HOST`, `MYSQL_PORT`, `MYSQL_USER`, `MYSQL_PASSWORD`, `MYSQL_DATABASE`. The app falls back to these if `DB_*` vars are not set.
+
+## Deployment (Railway)
+
+1. Push repo to GitHub
+2. Create Railway project → link GitHub repo
+3. Add MySQL plugin (auto-provisions)
+4. Add env vars: `JWT_SECRET`, `CORS_ORIGIN`
+5. Railway auto-deploys via Nixpacks (detects package.json)
+
+## Middleware Chain
+
+```
+Request
+  → helmet (security headers, CSP disabled)
+  → cors (configurable origin)
+  → express.json (body parser)
+  → rate-limit (20 req/15min on /api/auth)
+  → routes
+    → auth middleware (JWT verify for protected routes)
+      → controller
+        → model (MySQL query)
+  → errorHandler (500 fallback)
+```
+
+## Error Handling
+
+All controllers use try/catch with `next(err)`. The global error handler returns:
+
+```json
+{ "error": "Error message here" }
+```
+
+HTTP status codes:
+- 400 — Validation error (missing fields, short password)
+- 401 — Invalid credentials or expired JWT
+- 403 — Not authorized (wrong user)
+- 404 — Resource not found
+- 409 — Email already registered
+- 429 — Rate limit exceeded
+- 500 — Internal server error
