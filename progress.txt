@@ -24,3 +24,33 @@
 - Modified `src/js/ui.js` — Added removeTodoItem() with slideOut animation helper
 - Modified `src/js/app.js` — Import theme, initTheme, animated delete via removeTodoItem
 - Modified `src/index.html` — Added header with theme toggle button
+
+##2026-05-28
+
+## Kategori Task (Sesi 2 - Backend & Auth)
+- Created `docker-compose.yml` — MySQL 8.0 container definition
+- Created `init.sql` — Schema users + todos with FK
+- Created `src/config/db.js` — MySQL connection pool via mysql2
+- Created `src/models/user.model.js` — User queries (findAll, findById, findByEmail, create)
+- Created `src/models/todo.model.js` — Todo CRUD queries with user_id
+- Created `src/controllers/user.controller.js` — User request handlers
+- Created `src/controllers/auth.controller.js` — Register/login with bcrypt + JWT
+- Created `src/controllers/todo.controller.js` — Todo CRUD with ownership check
+- Created `src/routes/user.routes.js` — Express Router for users
+- Created `src/routes/auth.routes.js` — Express Router for auth
+- Created `src/routes/todo.routes.js` — Express Router for todos (JWT protected)
+- Created `src/middleware/errorHandler.js` — Global error handler
+- Created `src/middleware/auth.js` — JWT verification middleware
+- Created `src/app.js` — Express app setup with cors, helmet, routes
+- Modified `src/app.js` — Serve frontend static files from Express, add rate limiter
+- Modified `src/js/api.js` — HTTP client for all API endpoints (relative /api path)
+- Created `src/js/auth.js` — Auth state management (token, user in localStorage)
+- Modified `src/js/app.js` — Rewrite to support auth flow + API-based todo CRUD
+- Modified `src/index.html` — Added login/register forms, user bar, logout button
+- Modified `src/css/style.css` — Added auth forms, user bar, logout styles
+- Upgraded MySQL 8.0.46 → 8.4.9 LTS → 9.7.0 latest via two-step Docker upgrade
+- Created `.gitignore` — Added .env and node_modules/
+- Created `.env` / `.env.example` — Environment config with JWT_SECRET, CORS_ORIGIN
+- Installed dependencies: express, mysql2, dotenv, cors, helmet, bcryptjs, jsonwebtoken, express-rate-limit, nodemon
+- Branch created: `update/backend-db` → `update/login-register` → `optimize/pre-deploy`
+- Merged all branches into `main` and pushed to GitHub
