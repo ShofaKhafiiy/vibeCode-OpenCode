@@ -19,3 +19,8 @@
 - Modified `src/css/style.css` — Mobile-first responsive layout, touch targets ≥44px, swipe indicator, touch-action manipulation
 - Created `src/js/gestures.js` — Swipe-to-delete gesture handler (touchstart/touchmove/touchend)
 - Modified `src/js/app.js` — Import and initialize gesture support
+- Modified `src/css/style.css` — CSS variables theming, dark mode vars, slideIn/slideOut animations, header layout
+- Created `src/js/theme.js` — Theme manager with localStorage persistence + prefers-color-scheme fallback
+- Modified `src/js/ui.js` — Added removeTodoItem() with slideOut animation helper
+- Modified `src/js/app.js` — Import theme, initTheme, animated delete via removeTodoItem
+- Modified `src/index.html` — Added header with theme toggle button
