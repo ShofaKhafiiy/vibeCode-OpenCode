@@ -80,13 +80,14 @@ body {
 
 #add-btn {
   padding: 0.75rem 1.25rem;
-  min-width: 64px;        /* minimum touch target */
+  min-width: 64px;
+  min-height: 44px;       /* minimum touch target */
 }
 
 .todo-checkbox {
-  width: 24px;
-  height: 24px;
-  min-width: 24px;
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
 }
 
 .delete-btn {
@@ -208,12 +209,12 @@ Add to CSS or inline in `<head>`:
 
 ## Verification
 
-- [ ] Layout looks correct at 320px, 375px, 480px widths
-- [ ] No horizontal scroll on any viewport
-- [ ] Touch targets ≥ 44x44px
-- [ ] iOS Safari does not zoom on input focus (font-size ≥ 16px)
-- [ ] Swipe left reveals delete action
-- [ ] Swipe past threshold deletes the todo
-- [ ] Swipe under threshold snaps back
-- [ ] Swipe works smoothly (no jank)
-- [ ] Desktop still works with mouse (no regression)
+- [x] Layout looks correct at 320px, 375px, 480px widths
+- [x] No horizontal scroll on any viewport
+- [x] Touch targets ≥ 44x44px
+- [x] iOS Safari does not zoom on input focus (font-size ≥ 16px)
+- [x] Swipe left reveals delete action
+- [x] Swipe past threshold deletes the todo
+- [x] Swipe under threshold snaps back
+- [x] Swipe works smoothly (no jank)
+- [x] Desktop still works with mouse (no regression)

@@ -3,7 +3,8 @@
 This is a blank repo (zero commits, no source files) used for practicing OpenCode ("vibe coding"). Treat it as a clean slate.
 
 ## Repo state
-- **Branch:** `main` (no commits yet)
+- **Branch:** `update/backend-db` (feature branch for backend + database)
+- **Main:** `main`
 - **Remote:** `https://github.com/ShofaKhafiiy/vibeCode-OpenCode.git`
 - **No tooling configured:** no package.json, no build/test/lint setup, no CI, no README.
 
@@ -27,3 +28,14 @@ Rules:
 - Prefer modular architecture
 - Never break existing features
 - Use clean naming conventions
+- lakukan checklist jika pada tiap SKILL.md sudah terpenuhi
+
+## Available Skills
+
+| Skill | Status |
+|---|---|
+| `frontend-todo` | ✅ Modular JS, localStorage, clean architecture |
+| `responsive-layout` | ✅ Mobile-first CSS, swipe gestures, touch targets 44x44px |
+| `ui-enhancement`  | ✅ Dark mode CSS vars, localStorage toggle, slide animations |
+| `backend-node-db` | 🆕 Baru dibuat — arsitektur Node.js + Express + MySQL via Docker |
+

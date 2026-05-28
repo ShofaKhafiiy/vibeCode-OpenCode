@@ -190,10 +190,10 @@ Add CSS for `.header` and `.theme-toggle`.
 
 ## Verification
 
-- [ ] Theme persists across page reload
-- [ ] Respects system dark mode on first visit
-- [ ] Toggle button switches icon/text correctly
-- [ ] All colors switch smoothly
-- [ ] New todos slide in
-- [ ] Deleted todos slide out before removal
-- [ ] No flash of wrong theme on load (inline script or early init)
+- [x] Theme persists across page reload
+- [x] Respects system dark mode on first visit
+- [x] Toggle button switches icon/text correctly
+- [x] All colors switch smoothly
+- [x] New todos slide in
+- [x] Deleted todos slide out before removal
+- [x] No flash of wrong theme on load (inline script or early init)
