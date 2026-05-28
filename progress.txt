@@ -12,3 +12,10 @@
   - `events.js` — Event delegation via handler setup
   - `app.js` — Entry point orchestrating state and actions
 - Modified `index.html` — Updated paths to CSS and JS module entry
+- Push commit `16f7eaa` — Modularize Todo app into ES modules and push to GitHub
+- Created `develop` branch for future feature development
+- Created `.agents/skills/ui-enhancement/SKILL.md` - Dark mode CSS variables, localStorage toggle, animasi slide in/out
+- Created `.agents/skills/responsive-layout/SKILL.md` - Mobile-first responsive, swipe-to-delete gesture
+- Modified `src/css/style.css` — Mobile-first responsive layout, touch targets ≥44px, swipe indicator, touch-action manipulation
+- Created `src/js/gestures.js` — Swipe-to-delete gesture handler (touchstart/touchmove/touchend)
+- Modified `src/js/app.js` — Import and initialize gesture support

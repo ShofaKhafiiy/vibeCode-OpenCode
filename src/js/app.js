@@ -1,6 +1,7 @@
 import { loadTodos, saveTodos } from './storage.js';
 import { renderTodos } from './ui.js';
 import { setupEventHandlers } from './events.js';
+import { initGestures } from './gestures.js';
 
 let todos = loadTodos();
 
@@ -30,4 +31,11 @@ function deleteTodo(index) {
 }
 
 setupEventHandlers({ add: addTodo, toggle: toggleTodo, delete: deleteTodo });
+initGestures('#todo-list', (index) => {
+  if (confirm(`Delete "${todos[index].text}"?`)) {
+    todos.splice(index, 1);
+    saveTodos(todos);
+    renderTodos(todos);
+  }
+});
 renderTodos(todos);
