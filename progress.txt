@@ -1,0 +1,7 @@
+##2026-05-28
+
+## Kategori Task
+- Created `index.html` - Struktur halaman Todo List
+- Created `style.css` - Styling modern untuk Todo List
+- Created `script.js` - Logic CRUD + localStorage untuk Todo List
+- Modified `script.js` - Tambah konfirmasi hapus dengan confirm()
