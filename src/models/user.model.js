@@ -23,4 +23,14 @@ async function create({ name, email, password }) {
   return { id: result.insertId, name, email };
 }
 
-module.exports = { findAll, findById, findByEmail, create };
+async function remove(id) {
+  const [result] = await pool.query('DELETE FROM users WHERE id = ?', [id]);
+  return result.affectedRows > 0;
+}
+
+async function removeByEmail(email) {
+  const [result] = await pool.query('DELETE FROM users WHERE email = ?', [email]);
+  return result.affectedRows > 0;
+}
+
+module.exports = { findAll, findById, findByEmail, create, remove, removeByEmail };
