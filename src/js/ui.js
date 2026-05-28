@@ -14,6 +14,11 @@ export function renderTodos(todos) {
   list.appendChild(fragment);
 }
 
+export function removeTodoItem(li, callback) {
+  li.classList.add('removing');
+  li.addEventListener('animationend', () => callback(), { once: true });
+}
+
 function createEmptyState() {
   const li = document.createElement('li');
   li.className = 'empty-state';
