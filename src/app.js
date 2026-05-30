@@ -35,7 +35,10 @@ app.get('/api/health', (req, res) => {
   res.json({ status: 'ok' });
 });
 
-app.use(express.static(path.join(__dirname, '..', 'src')));
+if (!process.env.VERCEL) {
+  const publicPath = path.join(__dirname, '..', 'public');
+  app.use(express.static(publicPath));
+}
 
 app.use(errorHandler);
 

@@ -12,7 +12,22 @@
 
 ```
 .
-├── src/
+├── api/
+│   └── index.js                # Vercel serverless entry (exports Express app)
+├── public/                     # Static frontend (served by Vercel CDN)
+│   ├── index.html              # Frontend HTML
+│   ├── css/
+│   │   └── style.css           # All styles
+│   └── js/
+│       ├── app.js              # Frontend entry (auth flow + API calls)
+│       ├── api.js              # HTTP client for backend
+│       ├── auth.js             # Token/user localStorage management
+│       ├── storage.js          # (legacy) localStorage
+│       ├── ui.js               # DOM rendering
+│       ├── events.js           # Event delegation
+│       ├── gestures.js         # Swipe-to-delete
+│       └── theme.js            # Dark mode
+├── src/                        # Backend only
 │   ├── app.js                  # Entry point Express
 │   ├── config/
 │   │   ├── db.js               # MySQL connection pool
@@ -31,18 +46,8 @@
 │   ├── middleware/
 │   │   ├── auth.js             # JWT verification
 │   │   └── errorHandler.js     # Global error handler
-│   ├── js/
-│   │   ├── app.js              # Frontend entry (auth flow + API calls)
-│   │   ├── api.js              # HTTP client for backend
-│   │   ├── auth.js             # Token/user localStorage management
-│   │   ├── storage.js          # (legacy) localStorage
-│   │   ├── ui.js               # DOM rendering
-│   │   ├── events.js           # Event delegation
-│   │   ├── gestures.js         # Swipe-to-delete
-│   │   └── theme.js            # Dark mode
-│   ├── css/
-│   │   └── style.css           # All styles
-│   └── index.html              # Frontend HTML
+│   └── ...backend files only
+├── vercel.json                 # Vercel deployment config
 ├── docker-compose.yml          # MySQL container
 ├── init.sql                    # Database schema
 ├── .env.example                # Environment template
@@ -178,6 +183,39 @@ Railway MySQL plugin auto-injects `MYSQL_URL`, `MYSQL_HOST`, `MYSQL_PORT`, `MYSQ
 3. Add MySQL plugin (auto-provisions)
 4. Add env vars: `JWT_SECRET`, `CORS_ORIGIN`
 5. Railway auto-deploys via Nixpacks (detects package.json)
+
+## Deployment (Vercel)
+
+### Prerequisites
+
+- MySQL-compatible database (e.g. [TiDB Serverless](https://tidbcloud.com) — 5GB free, no credit card)
+- Vercel account (Hobby tier — free)
+
+### Steps
+
+1. Push repo to GitHub
+2. Go to [vercel.com](https://vercel.com) → Import GitHub repo
+3. In project settings, add Environment Variables:
+   - `DB_HOST`, `DB_PORT`, `DB_NAME`, `DB_USER`, `DB_PASSWORD` — from your MySQL provider
+   - `JWT_SECRET` — strong random string
+   - `JWT_EXPIRES_IN` — e.g. `7d`
+   - `CORS_ORIGIN` — your Vercel domain or `*`
+4. Deploy — Vercel automatically detects `vercel.json`
+5. Your app is live at `https://<project>.vercel.app`
+
+### Notes
+
+- Vercel runs Express as a **serverless function** — cold start ~1-3s after idle
+- Static files (`public/`) are served via Vercel CDN, not Express
+- Local development still works with `npm start` (Express serves `public/`)
+
+### Database providers (free tier)
+
+| Provider | Type | Free tier | CC required |
+|---|---|---|---|
+| [TiDB Serverless](https://tidbcloud.com) | MySQL-compatible | 5GB | No |
+| [PlanetScale](https://planetscale.com) | MySQL-compatible (Vitess) | 5GB | Yes |
+| [Aiven](https://aiven.io) | MySQL | 1GB | Yes |
 
 ## Middleware Chain
 
