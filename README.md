@@ -2,11 +2,11 @@
 
 Todo app sederhana dengan fitur login/register dan database MySQL.
 
-**Tech Stack:** Node.js, Express, MySQL, JWT, Docker
+**Tech Stack:** Node.js, Express, MySQL (TiDB Serverless), JWT, Docker
 
 ## Live Demo
 
-[https://vibecode-opencode-production.up.railway.app](https://vibecode-opencode-production.up.railway.app)
+[https://todo-app-ecru-two-42.vercel.app](https://todo-app-ecru-two-42.vercel.app)
 
 ## Fitur
 
@@ -61,26 +61,30 @@ Buka `http://localhost:3000`
 ## Struktur Project
 
 ```
-src/
-├── config/        # Koneksi database
-├── controllers/   # Logic handler
-├── middleware/     # Auth, error handler
-├── models/        # Query database
-├── routes/        # Definisi route
-├── js/            # Frontend JS
-├── css/           # Stylesheet
-└── app.js         # Entry point
+├── api/            # Vercel serverless entry
+├── public/         # Frontend (static)
+│   ├── css/
+│   ├── js/
+│   └── index.html
+├── src/            # Backend
+│   ├── config/     # Koneksi database
+│   ├── controllers/# Logic handler
+│   ├── middleware/  # Auth, error handler
+│   ├── models/     # Query database
+│   ├── routes/     # Definisi route
+│   └── app.js      # Entry point
+└── vercel.json     # Vercel config
 ```
 
 ## Environment Variables
 
 ```
-PORT=3000
 DB_HOST=localhost
 DB_PORT=3306
 DB_NAME=todo_db
 DB_USER=todo_user
 DB_PASSWORD=your_password
 JWT_SECRET=your_secret
+JWT_EXPIRES_IN=7d
 CORS_ORIGIN=*
 ```
