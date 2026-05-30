@@ -174,17 +174,11 @@ npm start               # Start server on :3000
 | CORS_ORIGIN | * | Allowed CORS origin |
 | NODE_ENV | development | Environment mode |
 
-Railway MySQL plugin auto-injects `MYSQL_URL`, `MYSQL_HOST`, `MYSQL_PORT`, `MYSQL_USER`, `MYSQL_PASSWORD`, `MYSQL_DATABASE`. The app falls back to these if `DB_*` vars are not set.
-
-## Deployment (Railway)
-
-1. Push repo to GitHub
-2. Create Railway project → link GitHub repo
-3. Add MySQL plugin (auto-provisions)
-4. Add env vars: `JWT_SECRET`, `CORS_ORIGIN`
-5. Railway auto-deploys via Nixpacks (detects package.json)
+`DB_*` vars can also be injected by the hosting platform (e.g. Railway used `MYSQL_*` vars as fallback).
 
 ## Deployment (Vercel)
+
+**Live URL:** https://todo-app-ecru-two-42.vercel.app
 
 ### Prerequisites
 
@@ -207,6 +201,7 @@ Railway MySQL plugin auto-injects `MYSQL_URL`, `MYSQL_HOST`, `MYSQL_PORT`, `MYSQ
 
 - Vercel runs Express as a **serverless function** — cold start ~1-3s after idle
 - Static files (`public/`) are served via Vercel CDN, not Express
+- Database tables auto-create on first request (lazy init in `api/index.js`)
 - Local development still works with `npm start` (Express serves `public/`)
 
 ### Database providers (free tier)
