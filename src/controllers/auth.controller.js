@@ -23,13 +23,13 @@ async function register(req, res, next) {
     const user = await userModel.create({ name, email, password: hashedPassword });
 
     const token = jwt.sign(
-      { id: user.id, email: user.email },
+      { id: user.id, email: user.email, role: user.role },
       process.env.JWT_SECRET,
       { expiresIn: process.env.JWT_EXPIRES_IN || '7d' }
     );
 
     res.status(201).json({
-      data: { user: { id: user.id, name: user.name, email: user.email }, token },
+      data: { user: { id: user.id, name: user.name, email: user.email, role: user.role }, token },
     });
   } catch (err) {
     next(err);
@@ -55,13 +55,13 @@ async function login(req, res, next) {
     }
 
     const token = jwt.sign(
-      { id: user.id, email: user.email },
+      { id: user.id, email: user.email, role: user.role },
       process.env.JWT_SECRET,
       { expiresIn: process.env.JWT_EXPIRES_IN || '7d' }
     );
 
     res.json({
-      data: { user: { id: user.id, name: user.name, email: user.email }, token },
+      data: { user: { id: user.id, name: user.name, email: user.email, role: user.role }, token },
     });
   } catch (err) {
     next(err);

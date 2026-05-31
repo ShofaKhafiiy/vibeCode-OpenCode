@@ -45,6 +45,7 @@
 │   │   └── user.routes.js      # GET /users, DELETE /users
 │   ├── middleware/
 │   │   ├── auth.js             # JWT verification
+│   │   ├── admin.js            # Admin-only authorization
 │   │   └── errorHandler.js     # Global error handler
 │   └── ...backend files only
 ├── vercel.json                 # Vercel deployment config
@@ -87,10 +88,22 @@ DELETE /api/todos/:id       # Delete
 ### Users
 
 ```
-GET    /api/users           # List all users (no auth)
-GET    /api/users/:id       # Get user by ID (no auth)
-DELETE /api/users/:id       # Delete own account (auth required)
-DELETE /api/users/email     # Delete by email: { "email": string } (auth required)
+GET    /api/users                   # List all users (no auth)
+GET    /api/users/:id               # Get user by ID (no auth)
+GET    /api/users/profile           # Get own profile (auth required)
+PUT    /api/users/profile           # Update profile: { name?, email?, currentPassword?, newPassword? } (auth required)
+DELETE /api/users/profile           # Delete own account (auth required)
+DELETE /api/users/:id               # Delete user by ID (auth required, admin can delete any)
+DELETE /api/users/email             # Delete by email: { "email": string } (auth required)
+```
+
+### Admin (auth + admin role required)
+
+```
+GET    /api/users/admin/users           # List all users with count
+GET    /api/users/admin/users/:id       # Get user by ID
+PUT    /api/users/admin/users/:id       # Update user: { name?, email?, role? }
+DELETE /api/users/admin/users/:id       # Delete any user
 ```
 
 ## Auth Flow
@@ -129,7 +142,9 @@ CREATE TABLE users (
   name VARCHAR(100) NOT NULL,
   email VARCHAR(255) NOT NULL UNIQUE,
   password VARCHAR(255) NOT NULL,
-  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+  role ENUM('user', 'admin') DEFAULT 'user',
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
 CREATE TABLE todos (

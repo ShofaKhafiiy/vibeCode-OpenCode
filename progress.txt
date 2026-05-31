@@ -54,3 +54,21 @@
 - Installed dependencies: express, mysql2, dotenv, cors, helmet, bcryptjs, jsonwebtoken, express-rate-limit, nodemon
 - Branch created: `update/backend-db` → `update/login-register` → `optimize/pre-deploy`
 - Merged all branches into `main` and pushed to GitHub
+
+##2026-05-31
+
+## Kategori Task - Profile, Admin Panel & Account Management
+- Modified `init.sql` — Add `role` ENUM('user','admin') and `updated_at` column to users table
+- Modified `src/models/user.model.js` — Add `update()` partial update + `count()` functions
+- Created `src/middleware/admin.js` — Admin-only authorization middleware
+- Modified `src/controllers/auth.controller.js` — Include `role` in JWT payload & register response
+- Modified `src/controllers/user.controller.js` — Add getProfile, updateProfile, removeOwnAccount, adminGetAllUsers, adminGetUserById, adminDeleteUser, adminUpdateUser
+- Modified `src/routes/user.routes.js` — Add profile routes (GET/PUT/DELETE /profile) and admin routes (/admin/users/*)
+- Modified `src/js/api.js` — Add getProfile, updateProfile, deleteAccount, adminGetUsers, adminDeleteUser, adminUpdateUser
+- Modified `src/js/app.js` — Add settings panel, delete account flow, admin panel with user list
+- Modified `src/index.html` — Add settings panel (form + delete btn) and admin panel (user list)
+- Modified `src/css/style.css` — Add styles for settings panel, admin panel, icon buttons, danger button
+- Modified `public/js/api.js` — Sync with src/js/api.js changes
+- Modified `public/js/app.js` — Sync with src/js/app.js changes
+- Modified `public/index.html` — Sync with src/index.html changes
+- Modified `public/css/style.css` — Sync with src/css/style.css changes

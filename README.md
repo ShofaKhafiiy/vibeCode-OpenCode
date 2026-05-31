@@ -15,6 +15,9 @@ Todo app sederhana dengan fitur login/register dan database MySQL.
 - Dark mode
 - Responsive mobile
 - Swipe to delete
+- **Update profil** (nama, email, password)
+- **Hapus akun sendiri** dengan konfirmasi ganda
+- **Admin panel** — lihat & hapus semua user (role-based)
 
 ## Cara Jalankan Lokal
 
@@ -55,8 +58,14 @@ Buka `http://localhost:3000`
 | POST | `/api/todos` | ✅ | Tambah todo |
 | PUT | `/api/todos/:id` | ✅ | Update todo |
 | DELETE | `/api/todos/:id` | ✅ | Hapus todo |
+| GET | `/api/users/profile` | ✅ | Ambil profil sendiri |
+| PUT | `/api/users/profile` | ✅ | Update profil (name, email, password) |
+| DELETE | `/api/users/profile` | ✅ | Hapus akun sendiri |
 | DELETE | `/api/users/email` | ✅ | Hapus user by email |
 | DELETE | `/api/users/:id` | ✅ | Hapus user by id |
+| GET | `/api/users/admin/users` | ✅ (admin) | Lihat semua user |
+| PUT | `/api/users/admin/users/:id` | ✅ (admin) | Update user |
+| DELETE | `/api/users/admin/users/:id` | ✅ (admin) | Hapus user |
 
 ## Struktur Project
 

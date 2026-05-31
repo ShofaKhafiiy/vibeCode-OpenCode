@@ -348,6 +348,182 @@ h1 {
   border-color: var(--danger);
 }
 
+.user-bar-actions {
+  display: flex;
+  gap: 0.4rem;
+  align-items: center;
+}
+
+.icon-btn {
+  background: none;
+  border: 1.5px solid var(--border-light);
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  padding: 0.4rem 0.5rem;
+  line-height: 1;
+  transition: background-color 0.2s, border-color 0.2s;
+  min-width: 44px;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-primary);
+}
+
+.icon-btn:hover {
+  background: var(--bg-item-hover);
+}
+
+.panel-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
+}
+
+.panel-header h2 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.back-btn {
+  background: none;
+  border: 1.5px solid var(--border-light);
+  border-radius: 8px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  padding: 0.4rem 0.7rem;
+  color: var(--text-primary);
+  min-height: 44px;
+  transition: background-color 0.2s;
+}
+
+.back-btn:hover {
+  background: var(--bg-item-hover);
+}
+
+#settings-panel input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  border: 1.5px solid var(--border-light);
+  border-radius: 8px;
+  outline: none;
+  background: var(--bg-container);
+  color: var(--text-primary);
+  margin-bottom: 0.75rem;
+  transition: border-color 0.2s;
+}
+
+#settings-panel input:focus {
+  border-color: var(--accent);
+}
+
+#settings-panel hr {
+  border: none;
+  border-top: 1px solid var(--border-light);
+  margin: 1rem 0;
+}
+
+.danger-btn {
+  width: 100%;
+  padding: 0.75rem;
+  font-size: 1rem;
+  font-weight: 500;
+  background: none;
+  color: var(--danger);
+  border: 1.5px solid var(--danger);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+  min-height: 44px;
+  margin-top: 0.5rem;
+}
+
+.danger-btn:hover {
+  background: var(--danger);
+  color: white;
+}
+
+.admin-count {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+}
+
+.admin-user-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem;
+  border: 1px solid var(--border-light);
+  border-radius: 8px;
+  margin-bottom: 0.5rem;
+  transition: background-color 0.2s;
+}
+
+.admin-user-item:hover {
+  background: var(--bg-item);
+}
+
+.admin-user-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  flex: 1;
+  min-width: 0;
+}
+
+.admin-user-info strong {
+  font-size: 0.95rem;
+  color: var(--text-primary);
+}
+
+.admin-user-info span {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.admin-user-role {
+  font-size: 0.75rem !important;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.admin-user-role.admin {
+  color: var(--accent) !important;
+}
+
+.admin-user-role.user {
+  color: var(--text-muted) !important;
+}
+
+.admin-user-actions {
+  flex-shrink: 0;
+  margin-left: 0.75rem;
+}
+
+.admin-delete-btn {
+  background: none;
+  border: 1.5px solid var(--danger);
+  color: var(--danger);
+  border-radius: 6px;
+  padding: 0.3rem 0.6rem;
+  font-size: 0.8rem;
+  cursor: pointer;
+  min-height: 44px;
+  transition: background 0.2s, color 0.2s;
+}
+
+.admin-delete-btn:hover {
+  background: var(--danger);
+  color: white;
+}
+
 @media (min-width: 640px) {
   body {
     padding: 2rem 1rem;

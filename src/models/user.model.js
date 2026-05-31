@@ -15,12 +15,43 @@ async function findByEmail(email) {
   return rows[0] || null;
 }
 
-async function create({ name, email, password }) {
+async function create({ name, email, password, role }) {
   const [result] = await pool.query(
-    'INSERT INTO users (name, email, password) VALUES (?, ?, ?)',
-    [name, email, password]
+    'INSERT INTO users (name, email, password, role) VALUES (?, ?, ?, ?)',
+    [name, email, password, role || 'user']
   );
-  return { id: result.insertId, name, email };
+  return { id: result.insertId, name, email, role: role || 'user' };
+}
+
+async function update(id, fields) {
+  const setClauses = [];
+  const values = [];
+
+  if (fields.name !== undefined) {
+    setClauses.push('name = ?');
+    values.push(fields.name);
+  }
+  if (fields.email !== undefined) {
+    setClauses.push('email = ?');
+    values.push(fields.email);
+  }
+  if (fields.password !== undefined) {
+    setClauses.push('password = ?');
+    values.push(fields.password);
+  }
+  if (fields.role !== undefined) {
+    setClauses.push('role = ?');
+    values.push(fields.role);
+  }
+
+  if (setClauses.length === 0) return null;
+
+  values.push(id);
+  const [result] = await pool.query(
+    `UPDATE users SET ${setClauses.join(', ')} WHERE id = ?`,
+    values
+  );
+  return result.affectedRows > 0;
 }
 
 async function remove(id) {
@@ -33,4 +64,9 @@ async function removeByEmail(email) {
   return result.affectedRows > 0;
 }
 
-module.exports = { findAll, findById, findByEmail, create, remove, removeByEmail };
+async function count() {
+  const [rows] = await pool.query('SELECT COUNT(*) as total FROM users');
+  return rows[0].total;
+}
+
+module.exports = { findAll, findById, findByEmail, create, update, remove, removeByEmail, count };

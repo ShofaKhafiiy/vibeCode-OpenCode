@@ -25,6 +25,21 @@ export function login(email, password) {
   });
 }
 
+export function getProfile() {
+  return request('/users/profile');
+}
+
+export function updateProfile(data) {
+  return request('/users/profile', {
+    method: 'PUT',
+    body: JSON.stringify(data),
+  });
+}
+
+export function deleteAccount() {
+  return request('/users/profile', { method: 'DELETE' });
+}
+
 export function getTodos() {
   return request('/todos');
 }
@@ -45,4 +60,19 @@ export function updateTodo(id, updates) {
 
 export function deleteTodo(id) {
   return request(`/todos/${id}`, { method: 'DELETE' });
+}
+
+export function adminGetUsers() {
+  return request('/users/admin/users');
+}
+
+export function adminDeleteUser(id) {
+  return request(`/users/admin/users/${id}`, { method: 'DELETE' });
+}
+
+export function adminUpdateUser(id, data) {
+  return request(`/users/admin/users/${id}`, {
+    method: 'PUT',
+    body: JSON.stringify(data),
+  });
 }

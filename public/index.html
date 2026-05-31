@@ -35,13 +35,43 @@
     <div id="todo-app" class="hidden">
       <div class="user-bar">
         <span id="user-name"></span>
-        <button id="logout-btn" class="logout-btn">Logout</button>
+        <div class="user-bar-actions">
+          <button id="settings-btn" class="icon-btn" title="Settings">⚙️</button>
+          <button id="admin-btn" class="icon-btn hidden" title="Admin">🛡️</button>
+          <button id="logout-btn" class="logout-btn">Logout</button>
+        </div>
       </div>
       <div class="input-group">
         <input type="text" id="todo-input" placeholder="Add a new task..." autofocus>
         <button id="add-btn">Add</button>
       </div>
       <ul id="todo-list"></ul>
+    </div>
+
+    <div id="settings-panel" class="hidden">
+      <div class="panel-header">
+        <button id="settings-back-btn" class="back-btn">← Back</button>
+        <h2>Settings</h2>
+      </div>
+      <form id="settings-form">
+        <input type="text" id="settings-name" placeholder="Name">
+        <input type="email" id="settings-email" placeholder="Email">
+        <hr>
+        <input type="password" id="settings-current-pw" placeholder="Current password (required for new password)">
+        <input type="password" id="settings-new-pw" placeholder="New password (min 6 chars)" minlength="6">
+        <button type="submit" class="auth-btn">Save Changes</button>
+      </form>
+      <hr>
+      <button id="delete-account-btn" class="danger-btn">Delete My Account</button>
+    </div>
+
+    <div id="admin-panel" class="hidden">
+      <div class="panel-header">
+        <button id="admin-back-btn" class="back-btn">← Back</button>
+        <h2>Admin Panel</h2>
+      </div>
+      <p id="admin-user-count" class="admin-count"></p>
+      <div id="admin-user-list"></div>
     </div>
   </div>
   <script src="js/app.js" type="module"></script>
